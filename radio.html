@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <title>登录 | 注册</title>
+</head>
+
+<body>
+    <header class="topbar clearfix">
+        <i class="fa fa-user-circle"></i>
+    </header>
+    <main>
+        <div class="flip-modal login">
+            <div class="modal modal-login">
+                <span class="fa fa-times icon"></span>
+                <div class="tabs">
+                    <a class="login active">登录</a>
+                    <a class="register">注册</a>
+                </div>
+                <div class="content">
+                    <div class="errormsg"></div>
+                    <form action="/login" method="post" class="userinfo">
+                        <label for="username" class="fa fa-user-o"></label><input type="text" name="username" placeholder="用户名">
+                        <label for="password" class="fa fa-key"></label><input type="password" name="password" placeholder="密码">
+                        <input type="submit" value="登录">
+                    </form>
+                </div>
+            </div>
+            <div class="modal modal-register">
+                <span class="fa fa-times icon"></span>
+                <div class="tabs">
+                    <a class="login">登录</a>
+                    <a class="register active">注册</a>
+                </div>
+                <div class="content">
+                    <div class="errormsg"></div>
+                    <form action="//register" method="post" class="userinfo">
+                        <label for="username" class="fa fa-user-o"></label><input type="text" name="username" placeholder="用户名">
+                        <label for="password" class="fa fa-key"></label><input type="password" name="password" placeholder="密码">
+                        <label for="password" class="fa fa-key"></label><input type="password" name="password2" placeholder="再次输入密码">
+                        <input type="submit" value="注册">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    function $(selector) {
+        return document.querySelector(selector)
+    }
+    function $$(selector) {
+        return document.querySelectorAll(selector)
+    }
+    var topbar = $('.topbar')
+    var flipModal = $('.flip-modal')
+    var register = $$('.tabs .register')
+    var login = $$('.tabs .login')
+    var close = $('.modal.modal-login > span')
+    topbar.onclick = function (e) {
+        e.stopPropagation()
+        flipModal.style.display = ('block')
+    }
+    // For循环绑定
+    // register.forEach(function(node){
+    //   node.onclick = function(){
+    //       flipModal.classList.add('register')
+    //       flipModal.classList.remove('login')
+    //   }
+    // })
+    // login.forEach(function(node){
+    //   node.onclick = function(){
+    //       flipModal.classList.add('login')
+    //       flipModal.classList.remove('register')
+    //   }
+    // })
+    // close.onclick = function(){
+    //     flipModal.style.display = ('none')
+    // }
+
+    //事件代理，注意目标元素内不要包含其他元素容易出错。
+    flipModal.addEventListener('click', function (e) {
+        e.stopPropagation()
+        if (e.target.classList.contains('login')) {
+            flipModal.classList.add('login')
+            flipModal.classList.remove('register')
+        }
+        if (e.target.classList.contains('register')) {
+            flipModal.classList.add('register')
+            flipModal.classList.remove('login')
+        }
+        if (e.target.classList.contains('icon')) {
+            flipModal.style.display = ('none')
+        }
+    })
+    document.documentElement.onclick = function () {
+        flipModal.style.display = ('none')
+    }
+
+    //输入检测
+    var log_errorMsg = $('.modal-login .errormsg')
+    var reg_errorMsg = $('.modal-register .errormsg')
+    var log_userName = $('.modal-login [type=text]')
+    var reg_userName = $('.modal-register [type=text]')
+    var log_passWord = $('.modal-login [type=password]')
+    var reg_passWord = $('.modal-register [type=password]')
+    var password2= $('.modal-register [name=password2]')
+    var log_submit = $(' .modal-login .userinfo')
+    var reg_submit = $(' .modal-register .userinfo')
+
+    // log_submit.addEventListener('submit', function (e) {
+    //     e.preventDefault()
+    //     var reg = /^\w{3,8}$/
+    //     log_userName.onchange = function (e) {
+    //         if (reg.test(log_userName.value) !== true) {
+    //             log_errorMsg.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
+    //             log_errorMsg.style.display = 'block'
+
+    //         } else {
+    //             log_errorMsg.style.display = 'none'
+    //             return true
+    //         }
+    //         return false
+    //     }
+    //     var reg_password = /^\w{6,10}$/
+    //     log_passWord.onchange = function (e) {
+    //         if (reg_password.test(log_passWord.value) !== true) {
+    //             log_errorMsg.innerText = "密码需输入6-10个字符，包括字母数字下划线"
+    //             log_errorMsg.style.display = 'block'
+    //         } else {
+    //             log_errorMsg.style.display = 'none'
+    //             return true
+    //         }
+    //         return false
+    //     }
+    //     //  this.submit()
+    // })
+
+
+
+
+    // userName.forEach(function (e) {
+    //     var reg = /^\w{3,8}$/
+    //     e.onchange = function () {
+    //         if (reg.test(e.value) !== true) {
+    //             errorMsg.forEach(function (node) {
+    //                 node.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
+    //                 node.style.display = 'block'
+    //                 return false
+    //             })
+    //         } else {
+    //             errorMsg[0].style.display = 'none'
+    //             errorMsg[1].style.display = 'none'
+    //         }
+    //     }
+    // })
+    // passWord.forEach(function (e) {
+    //     var reg_password = /^\w{6,10}$/
+    //     e.onchange = function () {
+    //         if (reg_password.test(e.value) !== true) {
+    //             errorMsg.forEach(function (node) {
+    //                 node.innerText = "密码需输入6-10个字符，包括字母数字下划线"
+    //                 node.style.display = 'block'
+    //                 return false
+    //             })
+    //         } else {
+    //             errorMsg[0].style.display = 'none'
+    //             errorMsg[1].style.display = 'none'
+    //         }
+
+    //     }
+    // })
+    log_submit.addEventListener('submit',function(e){
+        e.preventDefault()
+        var reg = /^\w{3,8}$/
+        if(!reg.test(log_userName.value)){
+            log_errorMsg.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
+            return false
+        }
+        var reg_passWord = /^\w{6,10}$/
+        if(!reg_passWord.test(log_passWord.value)){
+            log_errorMsg.innerText = "密码需输入6-10个字符，包括字母数字下划线"
+            return false
+        }
+        this.submit()
+    })
+    reg_submit.addEventListener('submit',function(e){
+        e.preventDefault()
+        var reg = /^\w{3,8}$/
+        if(!reg.test(reg_userName.value)){
+            reg_errorMsg.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
+            return false
+        }
+        var reg_password = /^\w{6,10}$/
+        if(!reg_password.test(reg_passWord.value)){
+            reg_errorMsg.innerText = "密码需输入6-10个字符，包括字母数字下划线"
+            return false
+        }
+         if(password2.value !== reg_passWord.value){
+             reg_errorMsg.innerText = '两次输入的密码不一致'
+             return false
+         }
+         this.submit()
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,137 @@
+/*reset css*/
+* {
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+html,body {
+    width:100%;
+    height:100%;
+}
+ul,
+ol,
+li {
+    list-style: none;
+    padding:0;
+}
+a {
+    text-decoration: none;
+    color:#000;
+    cursor: pointer;
+}
+.clearfix::after {
+    content: '';
+    display:block;
+    clear: both;
+}
+/* common css */
+main {
+   height:100%;
+   background: url(../image/bg.png) center center no-repeat;
+   background-size: cover;
+}
+.topbar{
+    width:100%;
+    position: absolute;
+    z-index:2;
+}
+.topbar i {
+    float:right;
+    font-size:20px;
+    top:15px;
+    right:20px;
+    position: absolute;
+    cursor: pointer;
+} 
+.flip-modal.login .modal-login,
+.flip-modal.register .modal-register {
+  transform: translate(-50%,-50%) rotateY(0deg);
+  backface-visibility: hidden;
+  transition: all 1s;
+}
+.flip-modal.login .modal-register,
+.flip-modal.register .modal-login {
+  transform: translate(-50%,-50%) rotateY(180deg);
+  backface-visibility: hidden;
+  transition: all 1s;
+}
+.flip-modal {
+    display:none;
+}
+.modal {
+    background:#fff;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    width: 450px;
+    padding:16px;
+    background:rgba(192,192,192,0.6);
+    border-radius: 5px;
+    box-shadow: 1px 2px 3px 1px rgba(192,192,192,0.6);
+}
+.tabs {
+    font-weight: bold;
+    text-align:center;
+}
+.tabs .login,.register {
+    display:inline-block;
+    padding-bottom: 4px;
+}
+.errormsg{
+    text-align:center;
+    padding:5px;
+}
+/* Tabs激活 */
+.active {
+    border-bottom: 4px solid #2E2D32;
+}
+.userinfo{
+    position: relative;
+    width:300px;
+    margin:0 auto;
+}
+[type='text'],
+[type='password']{
+ display:inline-block;
+ width:300px;
+ padding:12px 12px 12px 30px;
+ margin-top:20px;
+ outline:none;
+ border:1px solid; 
+}
+/* 图标 */
+.modal >span {
+    position: absolute;
+    font-size:15px;
+    right: 10px;
+    top: 7px;
+    cursor: pointer;
+}
+label:nth-child(1){
+    position: absolute; 
+    font-size: 20px;
+    top:31px    ;
+    left:7px;
+}
+label:nth-child(3){
+    position: absolute; 
+    font-size: 20px;
+    top:90px;
+    left:7px;
+}
+label:nth-child(5){
+    position: absolute; 
+    font-size: 20px;
+    top:151px;
+    left:7px;
+}
+[type='submit'] {
+    display: inline-block;
+    padding:5px 10px ;
+    margin-top:10px;
+    border:none;
+    border-radius: 5px;
+    outline: none;  
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.4);
+}
