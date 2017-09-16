@@ -113,68 +113,6 @@
     var log_submit = $(' .modal-login .userinfo')
     var reg_submit = $(' .modal-register .userinfo')
 
-    // log_submit.addEventListener('submit', function (e) {
-    //     e.preventDefault()
-    //     var reg = /^\w{3,8}$/
-    //     log_userName.onchange = function (e) {
-    //         if (reg.test(log_userName.value) !== true) {
-    //             log_errorMsg.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
-    //             log_errorMsg.style.display = 'block'
-
-    //         } else {
-    //             log_errorMsg.style.display = 'none'
-    //             return true
-    //         }
-    //         return false
-    //     }
-    //     var reg_password = /^\w{6,10}$/
-    //     log_passWord.onchange = function (e) {
-    //         if (reg_password.test(log_passWord.value) !== true) {
-    //             log_errorMsg.innerText = "密码需输入6-10个字符，包括字母数字下划线"
-    //             log_errorMsg.style.display = 'block'
-    //         } else {
-    //             log_errorMsg.style.display = 'none'
-    //             return true
-    //         }
-    //         return false
-    //     }
-    //     //  this.submit()
-    // })
-
-
-
-
-    // userName.forEach(function (e) {
-    //     var reg = /^\w{3,8}$/
-    //     e.onchange = function () {
-    //         if (reg.test(e.value) !== true) {
-    //             errorMsg.forEach(function (node) {
-    //                 node.innerText = '用户名需输入3-8个字符，包括字母数字下划线'
-    //                 node.style.display = 'block'
-    //                 return false
-    //             })
-    //         } else {
-    //             errorMsg[0].style.display = 'none'
-    //             errorMsg[1].style.display = 'none'
-    //         }
-    //     }
-    // })
-    // passWord.forEach(function (e) {
-    //     var reg_password = /^\w{6,10}$/
-    //     e.onchange = function () {
-    //         if (reg_password.test(e.value) !== true) {
-    //             errorMsg.forEach(function (node) {
-    //                 node.innerText = "密码需输入6-10个字符，包括字母数字下划线"
-    //                 node.style.display = 'block'
-    //                 return false
-    //             })
-    //         } else {
-    //             errorMsg[0].style.display = 'none'
-    //             errorMsg[1].style.display = 'none'
-    //         }
-
-    //     }
-    // })
     log_submit.addEventListener('submit',function(e){
         e.preventDefault()
         var reg = /^\w{3,8}$/
