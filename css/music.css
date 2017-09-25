@@ -1,0 +1,183 @@
+/*reset css*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 100%;
+}
+
+ul,
+ol,
+li {
+    list-style: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+/* common css */
+
+#bg {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: url(http://ww1.sinaimg.cn/large/be86cc18gy1fjtlkc4rtyj20e80e8wfs.jpg) center center no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+}
+
+#wraper {
+    width: 400px;
+    height: 130px;
+    padding: 30px 30px 30px 15px;
+    border-radius: 5px;
+    background: #2E2E2E;
+    box-shadow: 3px 16px 41px 2px rgba(0, 0, 0, 0.8);
+    color: #ddd;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -100px;
+}
+
+#features span {
+    color: #fff;
+    font-size: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+#features {
+    float: left;
+    margin-top: 15px;
+}
+
+#info .detail {
+    float: right;
+    margin-right: 90px;
+}
+.author {
+    font-size: 13px;
+}
+#process {
+    width: 260px;
+    color: #fff;
+    float: left;
+}
+.timeline {
+    position: relative;
+    top:0;
+    margin-top: 5px; 
+    width: 260px;
+    height: 3px;
+    background: #535353;
+    cursor: pointer;
+}
+.current {
+    position: absolute;
+    height: 3px;
+    width: 0%;
+    background: #c70c0c;
+    cursor: pointer;
+}
+
+.time {
+    float: right;
+    margin-top: 5px;
+}
+.sound {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 130px;
+    height:2px;
+    background:#535353;
+    visibility: hidden;
+    cursor: pointer;
+    
+}
+.volume {
+    width:100%;
+    height:2px;
+    background:#c70c0c;
+}
+.icon {
+    position: absolute;
+    top:91px;
+    left:14px;
+    cursor: pointer;
+}
+
+/* .pic {
+    /* position: relative; */
+
+.pic img {
+    height: 90px;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    border-radius: 50%;
+}
+
+
+/* 图片旋转 */
+
+.rotate {
+    animation: circle 4s infinite linear;
+}
+
+@keyframes circle {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+#list {
+    position: absolute;
+    width: 400px;
+    border-radius: 5px;
+    left: 410px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    font-size: 18px;
+    color: #000;
+}
+
+#list li {
+    width: 100%;
+    margin-top: 8px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#list li:nth-child(odd) {
+    background: #ccc;
+}
+
+.fa-music {
+    color: #882D2D;
+}
+
+
+/* 当播放到哪一首图标和背景就到哪一首 */
