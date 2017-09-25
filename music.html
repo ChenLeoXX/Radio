@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/music.css">
+  <title>音乐电台</title>
+</head>
+
+<body>
+  <main id="bg"></main>
+  <div id="wraper">
+    <div id="player" class="clearfix">
+      <div id="features">
+        <span class="back"><i class="fa fa-step-backward" aria-hidden="true"></i></span>
+        <span class="play"><i class="fa fa-pause" aria-hidden="true"></i></span>
+        <span class="forward"><i class="fa fa-step-forward" aria-hidden="true"></i></span>
+      </div>
+      <div id="info">
+        <div class="detail">
+          <div class="title">My song</div>
+          <div class="author">Leo</div>
+        </div>
+      </div>
+    </div>
+    <div id="process">
+      <div class="timeline">
+        <div class="total"></div>
+        <div class="current"></div>
+      </div>
+      <div class="time">0:00</div>
+    </div>
+    <span class="icon"><i class="fa fa-volume-up" aria-hidden="true"></i></span>
+    <div class="sound">
+      <div class="volume">
+      </div>
+    </div>
+    <div class="img">
+      <div class="pic">
+        <img class="rotate" src="http://ww1.sinaimg.cn/large/be86cc18gy1fjtlkc4rtyj20e80e8wfs.jpg">
+      </div>
+    </div>
+    <ol id="list">播放列表
+      <!-- <li><i class="fa fa-music" aria-hidden="true"></i> Against The Current - Closer</li>
+      <li>Against The Current - See You Again</li>
+      <li> Against The Current - Shape Of You</li>
+      <li> Ashes Remain - On My Own</li>
+      <li> 徐梦圆 - China-X</li> -->
+    </ol>
+  </div>
+
+</body>
+<script>
+  function $(selector) {
+    return document.querySelector(selector)
+  }
+  function $$(selector) {
+    return document.querySelectorAll(selector)
+  }
+  //Ajax请求 
+  var index = 4
+  var audio = new Audio()
+  audio.autoplay = true
+  getMusic(callback)
+  function callback(musicList) {
+    list = musicList
+    loadMusic(list[index])
+    mklist(list)
+  }
+  function loadMusic(musicInfo) {
+    audio.src = musicInfo.src
+    $('.pic img').src = musicInfo.img
+    $('#bg').style.backgroundImage = 'url(' + musicInfo.img + ')'
+    $('.title').innerText = musicInfo.title
+    $('.author').innerText = musicInfo.author
+
+  }
+  function getMusic(callback) {
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET', "/music.json", true)
+    xhr.onload = function () {
+      if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status < 304) {
+        var musicList = JSON.parse(xhr.responseText)
+        callback(musicList)
+      } else {
+        console.log('网络异常')
+      }
+    }
+    xhr.send()
+  }
+  // 进度条
+  audio.onplaying = function () {
+    var process = setInterval(function () {
+      $('.current').style.width = (audio.currentTime / audio.duration) * 100 + '%'
+    }, 1000)
+  }
+  audio.onpause = function () {
+    clearInterval(process)
+  }
+  //歌曲时间
+  audio.ontimeupdate = function () {
+    var min = Math.floor(audio.currentTime / 60)
+    var sec = Math.floor(audio.currentTime) % 60 + ""
+    sec = sec.length === 2 ? sec : "0" + sec
+    $('.time').innerText = min + ":" + sec;
+  }
+  //歌曲点击快进
+  $('.timeline').addEventListener('click', function (e) {
+    var rate = e.offsetX / parseInt(getComputedStyle(this).width)
+    audio.currentTime = audio.duration * rate
+  })
+  //歌曲音量
+  $('.icon').addEventListener('click', function (e) {
+    e.stopPropagation()
+    if (getComputedStyle($('.sound')).visibility === 'hidden') {
+      $('.sound').style.visibility = 'visible'
+    } else {
+      $('.sound').style.visibility = 'hidden'
+    }
+  })
+  $('.sound').addEventListener('click', function (e) {
+    var percent = (e.offsetX / 130) * 100
+    $('.volume').style.width = percent + '%'
+    audio.volume = e.offsetX / 130
+  })
+  // 事件绑定
+  $('.play').addEventListener('click', function () {
+    if (audio.paused) {
+      $('.pic img').classList.add('rotate')
+      audio.play()
+      this.querySelector('.fa').classList.remove('fa-play')
+      this.querySelector('.fa').classList.add('fa-pause')
+    } else {
+      $('.pic img').classList.remove('rotate')
+      audio.pause()
+      this.querySelector('.fa').classList.add('fa-play')
+      this.querySelector('.fa').classList.remove('fa-pause')
+    }
+  })
+  //下一首
+  $('.forward').addEventListener('click', function () {
+    index = (++index) % list.length
+    $('.play').querySelector('.fa ').classList.remove('fa-play')
+    $('.play').querySelector('.fa').classList.add('fa-pause')
+    $('.pic img').classList.add('rotate')
+    loadMusic(list[index])
+  })
+  //上一首
+  $('.back').addEventListener('click', function () {
+    index = (list.length + --index) % list.length
+    $('.play').querySelector('.fa ').classList.remove('fa-play')
+    $('.play').querySelector('.fa').classList.add('fa-pause')
+    $('.pic img').classList.add('rotate')
+    loadMusic(list[index])
+  })
+  //自动播放下一首
+  audio.onended = function () {
+    index = (++index) % list.length
+    loadMusic(list[index])
+  }
+  //生成音乐列表
+  function mklist(list) {
+    var fragment = document.createDocumentFragment()
+    for (var i = 0; i < list.length; i++) {
+      var li = document.createElement('li')
+      var html = document.createTextNode(list[i].author + " - " + list[i].title)
+      li.appendChild(html)
+      fragment.appendChild(li)
+    }
+    $('#list').appendChild(fragment)
+  }
+  //绑定事件到列表
+  $('#list').addEventListener('click', function (e) {
+    if (e.target.tagName.toLowerCase() === 'li') {
+      for (var k = 0; k < this.children.length; k++) {
+        if (this.children[k] === e.target) {
+          index = k
+        }
+      }
+    }
+    loadMusic(list[index])
+    $('.play').querySelector('.fa ').classList.remove('fa-play')
+    $('.play').querySelector('.fa').classList.add('fa-pause')
+    $('.pic img').classList.add('rotate')
+  })
+  //播放图标
+  audio.addEventListener('playing', function () {
+    var i = document.createElement(i)
+    i.classList.add('fa', 'fa-music')
+    var curLi = $('#list').children[index]
+    console.log(curLi.children[0])
+    if (curLi.children[0] === undefined) {
+       curLi.appendChild(i)
+    } else {
+      curLi.removeChild(curLi.children[0])
+    }
+  })
+
+</script>
+
+</html>
