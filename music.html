@@ -80,6 +80,7 @@
   }
   function getMusic(callback) {
     var xhr = new XMLHttpRequest()
+    //在GITHUB上 改为了 Radio/music.json
     xhr.open('GET', "/Radio/music.json", true)
     xhr.onload = function () {
       if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status < 304) {
