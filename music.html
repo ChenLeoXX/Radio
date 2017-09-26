@@ -80,6 +80,7 @@
   }
   function getMusic(callback) {
     var xhr = new XMLHttpRequest()
+    //在GITHUB上 改为了 Radio/music.json
     xhr.open('GET', "/music.json", true)
     xhr.onload = function () {
       if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status < 304) {
@@ -161,13 +162,16 @@
     index = (++index) % list.length
     loadMusic(list[index])
   }
-  //生成音乐列表
+  //生成音乐列表,生成列表li内的 i标签
   function mklist(list) {
     var fragment = document.createDocumentFragment()
     for (var i = 0; i < list.length; i++) {
+      var b = document.createElement('i')
+      b.classList.add('fa')
       var li = document.createElement('li')
       var html = document.createTextNode(list[i].author + " - " + list[i].title)
       li.appendChild(html)
+      li.appendChild(b)
       fragment.appendChild(li)
     }
     $('#list').appendChild(fragment)
@@ -180,25 +184,19 @@
           index = k
         }
       }
+      loadMusic(list[index])
     }
-    loadMusic(list[index])
     $('.play').querySelector('.fa ').classList.remove('fa-play')
     $('.play').querySelector('.fa').classList.add('fa-pause')
     $('.pic img').classList.add('rotate')
   })
   //播放图标
   audio.addEventListener('playing', function () {
-    var i = document.createElement(i)
-    i.classList.add('fa', 'fa-music')
     var curLi = $('#list').children[index]
-    console.log(curLi.children[0])
-    if (curLi.children[0] === undefined) {
-       curLi.appendChild(i)
-    } else {
-      curLi.removeChild(curLi.children[0])
+    for (var c = 0; c < $('#list').children.length; c++) {
+      $('#list').children[c].children[0].classList.remove('fa-music')
     }
+    curLi.children[0].classList.add('fa-music')
   })
-
 </script>
-
 </html>
